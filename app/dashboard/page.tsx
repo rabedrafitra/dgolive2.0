@@ -1,3 +1,5 @@
+'use client';
+
 import { currentUser } from '@clerk/nextjs/server';
 import Wrapper from '../components/Wrapper';
 import ProductOverview from '../components/ProductOverview';
