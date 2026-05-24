@@ -1,7 +1,7 @@
 'use client';
 
 import { UserButton, useUser } from '@clerk/nextjs'
-import { Menu, User, Phone,  X, LayoutDashboard, TvMinimalPlay} from 'lucide-react'
+import { Menu, User, Phone,  X, LayoutDashboard, TvMinimalPlay, Home} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false)
 
     const navLinks = [
-        
+        { href: '/landing', label: 'Accueil', icon: Home },
         { href: "/", label: "Tableau de Bord", icon: LayoutDashboard },
         { href: "/live", label: "Live", icon: TvMinimalPlay },
         { href: "/client", label: "Client", icon: User },
