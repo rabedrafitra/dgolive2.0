@@ -1,3 +1,5 @@
+'use client';
+
 import { StatLive } from '@/type'
 import React, { useEffect, useState } from 'react'
 import {  getStatLive } from '../actions'
