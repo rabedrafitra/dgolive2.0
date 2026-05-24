@@ -15,7 +15,7 @@ const Navbar = () => {
 
     const navLinks = [
         { href: '/landing', label: 'Accueil', icon: Home },
-        { href: "/", label: "Tableau de Bord", icon: LayoutDashboard },
+        { href: "/dashboard", label: "Tableau de Bord", icon: LayoutDashboard },
         { href: "/live", label: "Live", icon: TvMinimalPlay },
         { href: "/client", label: "Client", icon: User },
         { href: "/contact", label: "Contact", icon: Phone },
