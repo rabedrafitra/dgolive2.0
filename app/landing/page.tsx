@@ -11,7 +11,7 @@ export default function Home() {
           <div className="relative mx-auto max-w-5xl text-center">
             <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm uppercase tracking-[0.35em] text-slate-300">
               <Sparkles className="w-4 h-4 text-pink-400" />
-              Produit de INNOVAS MODE
+              Un Produit INNOVAS MODE
             </p>
             <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-white sm:text-6xl">
               Boostez vos ventes en direct avec un tableau de bord optimisé
