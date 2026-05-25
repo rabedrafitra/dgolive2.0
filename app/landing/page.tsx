@@ -1,3 +1,5 @@
+'use client';
+
 import Wrapper from '../components/Wrapper';
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Sparkles, Users } from 'lucide-react';
