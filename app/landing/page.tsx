@@ -132,7 +132,7 @@ export default function Home() {
               Ring light studio
             </span>
             <img
-              src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1000&q=80"
+              src="https://esther-edu.mg/img/sdfsdfsdfsdfsfd.jpg"
               alt="Live shopping studio ring light"
               className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
             />
@@ -146,7 +146,7 @@ export default function Home() {
         </div>
         <div className="rounded-3xl overflow-hidden bg-white shadow-xl">
           <img
-            src="https://esther-edu.mg/img/sdfsdfsdfsdfsfd.jpg"
+            src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1000&q=80"
             alt="Business fashion e-commerce"
             className="h-64 w-full object-cover"
           />
