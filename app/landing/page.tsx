@@ -146,7 +146,7 @@ export default function Home() {
             <p className="mt-4 text-sm leading-6 text-slate-600">Donnez une allure ultra-pro à vos sessions mode grâce à un studio ring light, des visuels lumineux et un cadrage qui met en valeur chaque tenue.</p>
           </div>
         </div>
-        <div className="rounded-3xl overflow-hidden bg-white shadow-xl">
+          <div className="rounded-3xl overflow-hidden bg-slate-950 text-white shadow-xl">
           <img
             src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1000&q=80"
             alt="Business fashion e-commerce"
