@@ -39,16 +39,12 @@ export default function ContactPage() {
 
             <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 shadow-2xl">
               <img
-                src="https://esther-edu.mg/img/sdfsdfsdfsdfsfd.jpg"
+                src="https://i.pinimg.com/736x/6a/01/94/6a0194880615f49d05957650768dd55f.jpg"
                 alt="Personne en studio ring light"
                 className="h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-              <div className="absolute left-6 bottom-6 rounded-3xl bg-white/90 p-5 shadow-xl backdrop-blur-sm">
-                <span className="text-xs uppercase tracking-[0.3em] text-slate-500">Studio live</span>
-                <h2 className="mt-3 text-xl font-semibold text-slate-950">Ring light & présentation mode</h2>
-                <p className="mt-2 text-sm text-slate-600">Un visuel haut de gamme pour valoriser vos looks et votre présence lors de chaque live.</p>
-              </div>
+              
             </div>
           </div>
         </section>
