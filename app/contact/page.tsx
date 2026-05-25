@@ -39,7 +39,7 @@ export default function ContactPage() {
 
             <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80"
+                src="https://esther-edu.mg/img/sdfsdfsdfsdfsfd.jpg"
                 alt="Personne en studio ring light"
                 className="h-full w-full object-cover"
               />
@@ -76,7 +76,7 @@ export default function ContactPage() {
             </div>
             <div className="rounded-[2rem] overflow-hidden bg-slate-950">
               <img
-                src="https://images.unsplash.com/photo-1542191967-d5ce7ec14842?auto=format&fit=crop&w=1000&q=80"
+                src="https://i.pinimg.com/1200x/9f/f3/67/9ff36790c7910ecd6e9345411f09258f.jpg"
                 alt="Personne sous ring light en studio"
                 className="h-full w-full object-cover"
               />
