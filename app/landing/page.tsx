@@ -12,7 +12,6 @@ export default function Home() {
             <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm uppercase tracking-[0.35em] text-slate-300">
               <Sparkles className="w-4 h-4 text-pink-400" />
               Un Produit INNOVAS MODE
-              Un Produit INNOVAS
             </p>
             <h1 className="mt-8 text-5xl font-extrabold tracking-tight text-white sm:text-6xl">
               Boostez vos ventes en direct avec un tableau de bord optimisé
@@ -147,7 +146,7 @@ export default function Home() {
         </div>
         <div className="rounded-3xl overflow-hidden bg-white shadow-xl">
           <img
-            src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1000&q=80"
+            src="https://esther-edu.mg/img/sdfsdfsdfsdfsfd.jpg"
             alt="Business fashion e-commerce"
             className="h-64 w-full object-cover"
           />
