@@ -347,12 +347,20 @@ const Page = () => {
           </button>
         </div>
 
-        {lives.length === 0 ? (
-          <EmptyState
-            message="Pas encore de session LIVE"
-            IconComponent="CirclePlay"
-          />
-        ) : (
+      {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 gap-4">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+
+                <p className="text-sm text-gray-500">
+                  Chargement des sessions live...
+                </p>
+              </div>
+                  ) : lives.length === 0 ? (
+                    <EmptyState
+                      message="Pas encore de session LIVE"
+                      IconComponent="CirclePlay"
+                    />
+                ) : (
           <>
             <h1 className="text-xl md:text-2xl font-bold mb-4">
               Live du mois de{' '}
