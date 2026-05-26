@@ -6,11 +6,9 @@ import OperationList from '../components/OperationList';
 import Link from 'next/link';
 
 import {
-  ArrowRight,
   BarChart3,
   ShieldCheck,
   Sparkles,
-  TvMinimalPlay,
   Wallet,
   Users,
 } from 'lucide-react';
@@ -58,10 +56,10 @@ export default async function DashboardPage() {
       {/* LEFT TEXT */}
       <div className="max-w-2xl">
 
-        <div className="inline-flex items-center gap-2 text-xs opacity-70 tracking-widest">
-          <TvMinimalPlay className="w-5 h-5" />
-          DASHBOARD
-        </div>
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-300">
+                  <Sparkles className="w-4 h-4 text-pink-400" />
+                  Dashboard DGoLive
+           </div>
 
         <h1 className="text-5xl sm:text-6xl font-black mt-6 leading-tight">
           Bienvenue <span className="text-primary">{user.firstName || 'user'}</span>
