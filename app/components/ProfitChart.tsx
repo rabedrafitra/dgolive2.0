@@ -281,7 +281,7 @@ const ProfitChart = ({
           </div>
 
           <p
-            className={`text-lg md:text-xl font-bold break-words leading-tight ${
+            className={`text-base md:text-lg leading-tight font-bold break-words leading-tight ${
               totalProfit >= 0
                 ? 'text-success'
                 : 'text-error'
@@ -303,7 +303,7 @@ const ProfitChart = ({
             </span>
           </div>
 
-          <p className="text-lg md:text-xl font-bold break-words leading-tight">
+          <p className="text-base md:text-lg leading-tight font-bold break-words leading-tight">
             {totalOrders}
           </p>
         </div>
@@ -317,7 +317,7 @@ const ProfitChart = ({
             </span>
           </div>
 
-          <p className="text-lg md:text-xl font-bold break-words leading-tight">
+          <p className="text-base md:text-lg leading-tight font-bold break-words leading-tight">
             {totalRevenue.toLocaleString(
               'fr-FR'
             )}{' '}

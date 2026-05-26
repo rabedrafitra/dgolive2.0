@@ -16,54 +16,20 @@ import {
 } from 'lucide-react';
 
 export default async function DashboardPage() {
-  // ✅ utilisateur côté serveur
   const user = await currentUser();
 
-  // ❌ utilisateur non connecté
   if (!user) {
     return (
       <Wrapper>
         <div className="mx-auto max-w-4xl py-24 px-4">
-          <div className="overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-[0_40px_120px_rgba(15,23,42,0.35)]">
-            <div className="relative overflow-hidden px-8 py-20 sm:px-14">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.18),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(236,72,153,0.16),transparent_30%)]" />
-
-              <div className="relative text-center">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-300">
-                  <Sparkles className="w-4 h-4 text-pink-400" />
-                  Dashboard DGoLive
-                </div>
-
-                <h1 className="mt-8 text-5xl font-black tracking-tight">
-                  Accédez à votre tableau de bord intelligent
-                </h1>
-
-                <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                  Consultez vos statistiques, revenus, opérations et performances live.
-                </p>
-
-                <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Link href="/sign-in" className="btn btn-primary btn-lg rounded-full px-10">
-                    Se connecter
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-
-                  <Link
-                    href="/"
-                    className="btn btn-outline btn-lg rounded-full border-white/20 px-10 text-white hover:border-primary hover:text-primary"
-                  >
-                    Retour à l'accueil
-                  </Link>
-                </div>
-              </div>
-            </div>
+          <div className="rounded-[2rem] bg-slate-950 text-white p-10">
+            <h1 className="text-3xl font-bold">Connexion requise</h1>
           </div>
         </div>
       </Wrapper>
     );
   }
 
-  // ✅ email sécurisé
   const email =
     user.primaryEmailAddress?.emailAddress ||
     user.emailAddresses?.[0]?.emailAddress;
@@ -80,97 +46,117 @@ export default async function DashboardPage() {
 
   return (
     <Wrapper>
-      <div className="space-y-10 pb-10">
+      <div className="space-y-8 pb-10">
 
-        {/* HERO */}
-        <section className="relative overflow-hidden rounded-[2rem] bg-slate-950 text-white shadow-[0_40px_120px_rgba(15,23,42,0.25)]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.20),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(236,72,153,0.16),transparent_30%)]" />
+       {/* HERO */}
+<section className="relative overflow-hidden rounded-[2.5rem] bg-slate-950 text-white shadow-xl">
 
-          <div className="relative px-6 py-12 sm:px-10 sm:py-16">
-            <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+  <div className="relative px-8 py-14 sm:px-12 sm:py-20">
 
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-300">
-                  <TvMinimalPlay className="w-4 h-4 text-primary" />
-                  Tableau de bord DGoLive
-                </div>
+    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
 
-                <h1 className="mt-6 text-4xl font-black leading-tight sm:text-5xl">
-                  Bienvenue {user.firstName || 'sur DGoLive'}
-                </h1>
+      {/* LEFT TEXT */}
+      <div className="max-w-2xl">
 
-                <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
-                  Analysez vos performances et gérez vos ventes live.
-                </p>
+        <div className="inline-flex items-center gap-2 text-xs opacity-70 tracking-widest">
+          <TvMinimalPlay className="w-5 h-5" />
+          DASHBOARD
+        </div>
+
+        <h1 className="text-5xl sm:text-6xl font-black mt-6 leading-tight">
+          Bienvenue <span className="text-primary">{user.firstName || 'user'}</span>
+        </h1>
+
+        <p className="text-slate-300 mt-4 text-lg sm:text-xl leading-relaxed max-w-xl">
+          Analyse en temps réel de tes ventes, profits et performances live.
+        </p>
+
+      </div>
+
+      {/* STATS BIGGER CARDS */}
+      <div className="grid grid-cols-2 gap-4 lg:w-[420px]">
+
+        <div className="bg-white/5 p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition">
+          <BarChart3 className="w-6 h-6 text-blue-400" />
+          <p className="text-xs mt-3 opacity-60">Statistiques</p>
+          <p className="font-bold text-lg mt-1">Temps réel</p>
+        </div>
+
+        <div className="bg-white/5 p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition">
+          <Wallet className="w-6 h-6 text-pink-400" />
+          <p className="text-xs mt-3 opacity-60">Revenus</p>
+          <p className="font-bold text-lg mt-1">Suivi précis</p>
+        </div>
+
+        <div className="bg-white/5 p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition">
+          <Users className="w-6 h-6 text-green-400" />
+          <p className="text-xs mt-3 opacity-60">Clients</p>
+          <p className="font-bold text-lg mt-1">Gestion rapide</p>
+        </div>
+
+        <div className="bg-white/5 p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition">
+          <ShieldCheck className="w-6 h-6 text-emerald-400" />
+          <p className="text-xs mt-3 opacity-60">Sécurité</p>
+          <p className="font-bold text-lg mt-1">Clerk sécurisé</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>
+        {/* MAIN GRID */}
+        <section className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+
+          {/* LEFT */}
+          <div className="xl:col-span-7 space-y-6">
+
+            <div className="bg-base-100 rounded-3xl shadow-lg">
+              <div className="border-b px-6 py-5">
+                <h2 className="font-bold text-xl">Vue générale</h2>
               </div>
-
-              {/* STATS */}
-              <div className="grid grid-cols-2 gap-4 lg:w-[420px]">
-
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <BarChart3 className="w-6 h-6 text-primary" />
-                  <p className="mt-4 text-sm text-slate-400">Statistiques</p>
-                  <h3 className="mt-2 text-2xl font-black">Temps réel</h3>
-                </div>
-
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <Wallet className="w-6 h-6 text-pink-400" />
-                  <p className="mt-4 text-sm text-slate-400">Revenus</p>
-                  <h3 className="mt-2 text-2xl font-black">Suivi précis</h3>
-                </div>
-
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <Users className="w-6 h-6 text-secondary" />
-                  <p className="mt-4 text-sm text-slate-400">Clients</p>
-                  <h3 className="mt-2 text-2xl font-black">Gestion rapide</h3>
-                </div>
-
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <ShieldCheck className="w-6 h-6 text-emerald-400" />
-                  <p className="mt-4 text-sm text-slate-400">Sécurité</p>
-                  <h3 className="mt-2 text-2xl font-black">Clerk sécurisé</h3>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CONTENT */}
-        <section className="grid grid-cols-1 gap-8 xl:grid-cols-12">
-
-          <div className="xl:col-span-7 space-y-8">
-            <div className="rounded-[2rem] bg-base-100 shadow-xl">
-              <div className="border-b px-8 py-6">
-                <h2 className="text-2xl font-black">Vue générale</h2>
-              </div>
-              <div className="p-8">
+              <div className="p-6">
                 <ProductOverview email={email} />
               </div>
             </div>
 
-            <div className="rounded-[2rem] bg-base-100 shadow-xl">
-              <div className="border-b px-8 py-6">
-                <h2 className="text-2xl font-black">Analyse des profits</h2>
+            {/* IMPORTANT FIX CHART */}
+            <div className="bg-base-100 rounded-3xl shadow-lg">
+              <div className="border-b px-6 py-5">
+                <h2 className="font-bold text-xl">Analyse des profits</h2>
               </div>
-              <div className="p-8">
-                <ProfitChart email={email} />
+
+              {/* FIX CRUCIAL: height wrapper obligatoire */}
+              <div className="p-4">
+                <div className="w-full h-[340px]">
+                  <ProfitChart email={email} />
+                </div>
               </div>
             </div>
+
           </div>
 
+          {/* RIGHT */}
           <div className="xl:col-span-5">
-            <div className="sticky top-6 rounded-[2rem] bg-base-100 shadow-xl">
-              <div className="border-b px-8 py-6">
-                <h2 className="text-2xl font-black">Activités récentes</h2>
+
+            <div className="sticky top-6 bg-base-100 rounded-3xl shadow-lg">
+
+              <div className="border-b px-6 py-5 flex justify-between">
+                <h2 className="font-bold text-xl">Activités récentes</h2>
+                <span className="text-xs opacity-50">Live</span>
               </div>
-              <div className="max-h-[850px] overflow-y-auto p-8">
+
+              <div className="p-4 max-h-[680px] overflow-y-auto">
                 <OperationList email={email} />
               </div>
+
             </div>
+
           </div>
 
         </section>
+
       </div>
     </Wrapper>
   );
