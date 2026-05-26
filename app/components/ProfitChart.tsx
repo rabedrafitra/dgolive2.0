@@ -1,10 +1,34 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { readLives, getOrdersByLiveId } from '@/app/actions';
+import React, { useEffect, useMemo, useState } from 'react';
+
+import {
+  ResponsiveContainer,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Bar,
+  ComposedChart,
+  Cell,
+  Area,
+} from 'recharts';
+
+import {
+  readLives,
+  getOrdersByLiveId,
+} from '@/app/actions';
+
 import EmptyState from './EmptyState';
-import { TrendingUp } from 'lucide-react';
+
+import {
+  TrendingUp,
+  TrendingDown,
+  Wallet,
+  ShoppingCart,
+  Activity,
+  CalendarRange,
+} from 'lucide-react';
 
 interface ProfitChartProps {
   email: string;
@@ -18,39 +42,99 @@ interface ProfitData {
   liveSessionCount: number;
 }
 
-const ProfitChart = ({ email }: ProfitChartProps) => {
-  const [profitData, setProfitData] = useState<ProfitData[]>([]);
-  const [startDate, setStartDate] = useState<string>(
-    new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().split('T')[0]
-  );
-  const [endDate, setEndDate] = useState<string>(new Date().toISOString().split('T')[0]);
-  const [loading, setLoading] = useState(true);
+const ProfitChart = ({
+  email,
+}: ProfitChartProps) => {
+  const [profitData, setProfitData] = useState<
+    ProfitData[]
+  >([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [startDate, setStartDate] =
+    useState<string>(
+      new Date(
+        new Date().setDate(
+          new Date().getDate() - 30
+        )
+      )
+        .toISOString()
+        .split('T')[0]
+    );
+
+  const [endDate, setEndDate] =
+    useState<string>(
+      new Date()
+        .toISOString()
+        .split('T')[0]
+    );
+
+  const [appliedStartDate, setAppliedStartDate] =
+    useState(startDate);
+
+  const [appliedEndDate, setAppliedEndDate] =
+    useState(endDate);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (!email) return;
+
         setLoading(true);
 
-        const livesData = await readLives(email);
+        const livesData =
+          await readLives(email);
+
         if (!livesData) {
           setProfitData([]);
+
           return;
         }
 
-        const dataByDate: { [date: string]: ProfitData } = {};
+        const dataByDate: {
+          [date: string]: ProfitData;
+        } = {};
 
         for (const live of livesData) {
-          const orders = await getOrdersByLiveId(live.id);
-          const ordersArray = Object.values(orders).flat();
-          const totalPaidAndCollected = ordersArray.reduce(
-            (sum: number, item: { price: number; isDeliveredAndPaid: boolean }) =>
-              sum + (item.isDeliveredAndPaid ? item.price : 0),
-            0
-          );
-          const orderCount = ordersArray.filter((item) => item.isDeliveredAndPaid).length;
-          const profit = totalPaidAndCollected - (live.purchasePrice ?? 0);
-          const date = new Date(live.date).toLocaleDateString('fr-FR', {
+          const orders =
+            await getOrdersByLiveId(
+              live.id
+            );
+
+          const ordersArray = Object.values(
+            orders || {}
+          ).flat();
+
+          const totalPaidAndCollected =
+            ordersArray.reduce(
+              (
+                sum: number,
+                item: {
+                  price: number;
+                  isDeliveredAndPaid: boolean;
+                }
+              ) =>
+                sum +
+                (item.isDeliveredAndPaid
+                  ? item.price
+                  : 0),
+              0
+            );
+
+          const orderCount =
+            ordersArray.filter(
+              (item) =>
+                item.isDeliveredAndPaid
+            ).length;
+
+          const profit =
+            totalPaidAndCollected -
+            (live.purchasePrice ?? 0);
+
+          const date = new Date(
+            live.date
+          ).toLocaleDateString('fr-FR', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
@@ -66,22 +150,42 @@ const ProfitChart = ({ email }: ProfitChartProps) => {
             };
           }
 
-          dataByDate[date].profit += profit;
-          dataByDate[date].orderCount += orderCount;
-          dataByDate[date].totalPaidAndCollected += totalPaidAndCollected;
-          dataByDate[date].liveSessionCount += 1;
+          dataByDate[date].profit +=
+            profit;
+
+          dataByDate[date].orderCount +=
+            orderCount;
+
+          dataByDate[
+            date
+          ].totalPaidAndCollected +=
+            totalPaidAndCollected;
+
+          dataByDate[
+            date
+          ].liveSessionCount += 1;
         }
 
-        const profitData: ProfitData[] = Object.values(dataByDate)
-          .filter((data) => data.liveSessionCount > 0)
-          .sort((a, b) =>
-            new Date(a.date.split('/').reverse().join('-')).getTime() -
-            new Date(b.date.split('/').reverse().join('-')).getTime()
+        const finalData =
+          Object.values(dataByDate).sort(
+            (a, b) =>
+              new Date(
+                a.date
+                  .split('/')
+                  .reverse()
+                  .join('-')
+              ).getTime() -
+              new Date(
+                b.date
+                  .split('/')
+                  .reverse()
+                  .join('-')
+              ).getTime()
           );
 
-        setProfitData(profitData);
+        setProfitData(finalData);
       } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -90,79 +194,273 @@ const ProfitChart = ({ email }: ProfitChartProps) => {
     fetchData();
   }, [email]);
 
-  const filteredData = profitData.filter((data) => {
-    const dataDate = new Date(data.date.split('/').reverse().join('-'));
-    return dataDate >= new Date(startDate) && dataDate <= new Date(endDate);
-  });
+  const handleApplyFilter = () => {
+    setAppliedStartDate(startDate);
+
+    setAppliedEndDate(endDate);
+  };
+
+  const filteredData = useMemo(() => {
+    return profitData.filter((data) => {
+      const dataDate = new Date(
+        data.date
+          .split('/')
+          .reverse()
+          .join('-')
+      );
+
+      return (
+        dataDate >=
+          new Date(appliedStartDate) &&
+        dataDate <=
+          new Date(appliedEndDate)
+      );
+    });
+  }, [
+    profitData,
+    appliedStartDate,
+    appliedEndDate,
+  ]);
+
+  const totalProfit =
+    filteredData.reduce(
+      (sum, data) =>
+        sum + data.profit,
+      0
+    );
+
+  const totalOrders =
+    filteredData.reduce(
+      (sum, data) =>
+        sum + data.orderCount,
+      0
+    );
+
+  const totalRevenue =
+    filteredData.reduce(
+      (sum, data) =>
+        sum +
+        data.totalPaidAndCollected,
+      0
+    );
+
+  const totalLives =
+    filteredData.reduce(
+      (sum, data) =>
+        sum +
+        data.liveSessionCount,
+      0
+    );
 
   return (
-    <div className="mt-6 bg-base-100 rounded-3xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
-      <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-        <TrendingUp className="w-6 h-6 text-primary" />
-        Métriques par période
-      </h2>
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <div className="flex-1">
-          <label className="text-sm font-medium text-white mb-1 block">Date de début</label>
+    <div className="mt-6 rounded-3xl bg-base-100 p-6 shadow-2xl border border-base-300">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-3 rounded-2xl bg-primary/20">
+          <Activity className="w-7 h-7 text-primary" />
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold">
+            Analyse des performances
+          </h2>
+
+          <p className="text-sm opacity-70">
+            Graphique dynamique des profits
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-base-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Wallet className="w-5 h-5 text-success" />
+
+            <span className="text-sm opacity-70">
+              Profit
+            </span>
+          </div>
+
+          <p
+            className={`text-lg md:text-xl font-bold break-words leading-tight ${
+              totalProfit >= 0
+                ? 'text-success'
+                : 'text-error'
+              }`}
+            >
+            {totalProfit.toLocaleString(
+              'fr-FR'
+            )}{' '}
+            Ar
+          </p>
+        </div>
+
+        <div className="bg-base-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <ShoppingCart className="w-5 h-5 text-info" />
+
+            <span className="text-sm opacity-70">
+              Commandes
+            </span>
+          </div>
+
+          <p className="text-lg md:text-xl font-bold break-words leading-tight">
+            {totalOrders}
+          </p>
+        </div>
+
+        <div className="bg-base-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="w-5 h-5 text-primary" />
+
+            <span className="text-sm opacity-70">
+              Chiffre d'affaires
+            </span>
+          </div>
+
+          <p className="text-lg md:text-xl font-bold break-words leading-tight">
+            {totalRevenue.toLocaleString(
+              'fr-FR'
+            )}{' '}
+            Ar
+          </p>
+        </div>
+
+        <div className="bg-base-200 rounded-2xl p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <CalendarRange className="w-5 h-5 text-warning" />
+
+            <span className="text-sm opacity-70">
+              Sessions
+            </span>
+          </div>
+
+          <p className="text-2xl font-bold">
+            {totalLives}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div>
+          <label className="text-sm mb-1 block">
+            Date début
+          </label>
+
           <input
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="input input-bordered w-full bg-base-200 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary transition-all duration-200"
-            max={endDate}
+            onChange={(e) =>
+              setStartDate(
+                e.target.value
+              )
+            }
+            className="input input-bordered w-full"
           />
         </div>
-        <div className="flex-1">
-          <label className="text-sm font-medium text-white mb-1 block">Date de fin</label>
+
+        <div>
+          <label className="text-sm mb-1 block">
+            Date fin
+          </label>
+
           <input
             type="date"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="input input-bordered w-full bg-base-200 text-white placeholder-gray-400 focus:ring-2 focus:ring-primary transition-all duration-200"
-            min={startDate}
+            onChange={(e) =>
+              setEndDate(
+                e.target.value
+              )
+            }
+            className="input input-bordered w-full"
           />
         </div>
+
+        <div className="flex items-end">
+          <button
+            onClick={handleApplyFilter}
+            className="btn btn-primary w-full rounded-xl"
+          >
+            Valider la période
+          </button>
+        </div>
       </div>
+
       {loading ? (
-        <div className="flex justify-center items-center w-full py-8">
+        <div className="flex justify-center py-16">
           <span className="loading loading-spinner loading-lg text-primary"></span>
         </div>
       ) : filteredData.length === 0 ? (
         <EmptyState
-          message="Aucune session live pour cette période"
+          message="Aucune donnée disponible"
           IconComponent="TrendingUp"
         />
       ) : (
-        <div className="overflow-x-auto">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
-              <XAxis dataKey="date" stroke="#F3F4F6" />
-              <YAxis stroke="#F3F4F6" />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#1F2937', border: 'none', color: '#F3F4F6' }}
-                cursor={{ fill: 'rgba(16, 185, 129, 0.1)' }}
+        <div className="h-[420px] w-full">
+          <ResponsiveContainer
+            width="100%"
+            height="100%"
+          >
+            <ComposedChart
+              data={filteredData}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                opacity={0.1}
               />
-              <Legend />
-              <Bar dataKey="profit" fill="#10B981" name="Profit (Ar)" />
-              <Bar dataKey="orderCount" fill="#FBBF24" name="Commandes" />
-              <Bar dataKey="totalPaidAndCollected" fill="#3B82F6" name="Total payé et collecté (Ar)" />
-              <Bar dataKey="liveSessionCount" fill="#8B5CF6" name="Sessions Live" />
-            </BarChart>
+
+              <XAxis dataKey="date" />
+
+              <YAxis />
+
+              <Tooltip
+                contentStyle={{
+                  borderRadius: 16,
+                  border: 'none',
+                }}
+              />
+
+              <Area
+                type="monotone"
+                dataKey="totalPaidAndCollected"
+                stroke="#3B82F6"
+                fill="#3B82F6"
+                fillOpacity={0.08}
+              />
+
+              <Bar
+                dataKey="profit"
+                radius={[8, 8, 0, 0]}
+              >
+                {filteredData.map(
+                  (entry, index) => (
+                    <Cell
+                      key={index}
+                      fill={
+                        entry.profit >= 0
+                          ? '#10B981'
+                          : '#EF4444'
+                      }
+                    />
+                  )
+                )}
+              </Bar>
+            </ComposedChart>
           </ResponsiveContainer>
-          <div className="mt-4 text-center">
-            <p className="text-lg font-bold text-white">
-              Total des profits : {filteredData.reduce((sum, data) => sum + data.profit, 0).toLocaleString('fr-FR')} Ar
-            </p>
-            <p className="text-lg font-bold text-white">
-              Total des commandes : {filteredData.reduce((sum, data) => sum + data.orderCount, 0).toLocaleString('fr-FR')}
-            </p>
-            <p className="text-lg font-bold text-white">
-              Chiffre Affaire: {filteredData.reduce((sum, data) => sum + data.totalPaidAndCollected, 0).toLocaleString('fr-FR')} Ar
-            </p>
-            <p className="text-lg font-bold text-white">
-              Total sessions live : {filteredData.reduce((sum, data) => sum + data.liveSessionCount, 0).toLocaleString('fr-FR')}
-            </p>
+
+          <div className="mt-4 flex justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+
+              <span>
+                Profit positif
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+
+              <span>Perte</span>
+            </div>
           </div>
         </div>
       )}
