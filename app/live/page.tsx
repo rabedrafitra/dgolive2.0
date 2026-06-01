@@ -411,8 +411,8 @@ const Page = () => {
             Commandes Livrés
           </th>
 
-          <th className="text-center">
-            Articles
+          <th className="text-center min-w-[90px]">
+              Articles
           </th>
 
           <th className="text-right">
@@ -461,15 +461,15 @@ const Page = () => {
             <td className="font-semibold text-right text-purple-600">
               {(live.totalAmount ?? 0).toLocaleString(
                 'fr-FR'
-              )}{' '}
-              Ar
+              )}{' '} Ar
+              
             </td>
 
             <td className="font-semibold text-right text-green-600">
               {(
                 live.totalCollected ?? 0
-              ).toLocaleString('fr-FR')}{' '}
-              Ar
+              ).toLocaleString('fr-FR')}{' '} Ar
+             
             </td>
 
             <td>
@@ -531,7 +531,7 @@ const Page = () => {
             )}
           </td>
 
-          <td className="text-center text-blue-600">
+          <td className="text-center text-blue-600 px-4">
             {lives.reduce(
               (sum, live) =>
                 sum +
@@ -548,8 +548,7 @@ const Page = () => {
                   (live.totalAmount ?? 0),
                 0
               )
-              .toLocaleString('fr-FR')}{' '}
-            Ar
+              .toLocaleString('fr-FR')}{' '} Ar
           </td>
 
           <td className="text-right text-green-600">
@@ -560,8 +559,7 @@ const Page = () => {
                   (live.totalCollected ?? 0),
                 0
               )
-              .toLocaleString('fr-FR')}{' '}
-            Ar
+              .toLocaleString('fr-FR')}{' '} Ar
           </td>
 
           <td></td>
