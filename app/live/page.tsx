@@ -347,307 +347,272 @@ const Page = () => {
           </button>
         </div>
 
-      {loading ? (
-              <div className="flex flex-col items-center justify-center py-20 gap-4">
-                <span className="loading loading-spinner loading-lg text-primary"></span>
+  <h1 className="text-xl md:text-2xl font-bold mb-4">
+  Live du mois de{' '}
+  {month.toLocaleDateString('fr-FR', {
+    month: 'long',
+    year: 'numeric',
+  })}
+</h1>
 
-                <p className="text-sm text-gray-500">
-                  Chargement des sessions live...
-                </p>
-              </div>
-                  ) : lives.length === 0 ? (
-                    <EmptyState
-                      message="Pas encore de session LIVE"
-                      IconComponent="CirclePlay"
-                    />
-                ) : (
-          <>
-            <h1 className="text-xl md:text-2xl font-bold mb-4">
-              Live du mois de{' '}
-              {month.toLocaleDateString(
-                'fr-FR',
-                {
-                  month: 'long',
-                  year: 'numeric',
-                }
-              )}
-            </h1>
+{/* Navigation Mois */}
+<div className="flex flex-wrap gap-2 mb-5">
+  <button
+    className="btn btn-sm"
+    onClick={() => changeMonth(-1)}
+  >
+    ⬅ Mois précédent
+  </button>
 
-            {/* Navigation Mois */}
-            <div className="flex flex-wrap gap-2 mb-5">
-              <button
-                className="btn btn-sm"
-                onClick={() => changeMonth(-1)}
-              >
-                ⬅ Mois précédent
-              </button>
+  <button
+    className="btn btn-sm btn-outline"
+    onClick={() => setMonth(new Date())}
+  >
+    Aujourd’hui
+  </button>
 
-              <button
-                className="btn btn-sm btn-outline"
-                onClick={() =>
-                  setMonth(new Date())
-                }
-              >
-                Aujourd’hui
-              </button>
+  <button
+    className="btn btn-sm"
+    onClick={() => changeMonth(1)}
+  >
+    Mois suivant ➡
+  </button>
+</div>
 
-              <button
-                className="btn btn-sm"
-                onClick={() => changeMonth(1)}
-              >
-                Mois suivant ➡
-              </button>
-            </div>
+{loading ? (
+  <div className="flex flex-col items-center justify-center py-20 gap-4">
+    <span className="loading loading-spinner loading-lg text-primary"></span>
 
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th className="w-8">#</th>
+    <p className="text-sm text-gray-500">
+      Chargement des sessions live...
+    </p>
+  </div>
+) : lives.length === 0 ? (
+  <EmptyState
+    message="Pas encore de session LIVE"
+    IconComponent="CirclePlay"
+  />
+) : (
+  <>
+    <table className="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th className="w-8">#</th>
 
-                  <th>Date</th>
+          <th>Date</th>
 
-                  <th>Nom</th>
+          <th>Nom</th>
 
-                  <th className="text-center">
-                    Nbr Commandes
-                  </th>
+          <th className="text-center">
+            Nbr Commandes
+          </th>
 
-                  <th className="text-center">
-                    Commandes Livrés
-                  </th>
+          <th className="text-center">
+            Commandes Livrés
+          </th>
 
-                  <th className="text-center">
-                    Articles
-                  </th>
+          <th className="text-center">
+            Articles
+          </th>
 
-                  <th className="text-right">
-                    Total 
-                  </th>
+          <th className="text-right">
+            Total
+          </th>
 
-                  <th className="text-right">
-                    Total Collecté
-                  </th>
+          <th className="text-right">
+            Total Collecté
+          </th>
 
-                  <th className="text-center w-32">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
+          <th className="text-center w-32">
+            Actions
+          </th>
+        </tr>
+      </thead>
 
-              <tbody>      
-                {currentLives.map(
-                  (live, index) => (
-                    <tr key={live.id}>
-                      <th className="text-center">
-                        {startIndex +
-                          index +
-                          1}
-                      </th>
+      <tbody>
+        {currentLives.map((live, index) => (
+          <tr key={live.id}>
+            <th className="text-center">
+              {startIndex + index + 1}
+            </th>
 
-                      <td className="whitespace-nowrap">
-                        {new Date(
-                          live.date
-                        ).toLocaleDateString(
-                          'fr-FR'
-                        )}
-                      </td>
+            <td className="whitespace-nowrap">
+              {new Date(
+                live.date
+              ).toLocaleDateString('fr-FR')}
+            </td>
 
-                      <td className="font-medium">
-                        {live.name}
-                      </td>
+            <td className="font-medium">
+              {live.name}
+            </td>
 
-                      <td className="text-center font-semibold text-blue-600">
-                        {live.clientsWithOrders ??
-                          0}
-                      </td>
+            <td className="text-center font-semibold text-blue-600">
+              {live.clientsWithOrders ?? 0}
+            </td>
 
-                      <td className="text-center font-semibold text-green-600">
-                        {live.clientsDelivered ??
-                          0}
-                      </td>
+            <td className="text-center font-semibold text-green-600">
+              {live.clientsDelivered ?? 0}
+            </td>
 
-                      <td className="font-semibold text-center text-blue-600">
-                        {live.totalArticles ??
-                          0}
-                      </td>
+            <td className="font-semibold text-center text-blue-600">
+              {live.totalArticles ?? 0}
+            </td>
 
-                      <td className="font-semibold text-right text-purple-600">
-                        {(
-                          live.totalAmount ?? 0
-                        ).toLocaleString(
-                          'fr-FR'
-                        )}{' '}
-                        Ar
-                      </td>
+            <td className="font-semibold text-right text-purple-600">
+              {(live.totalAmount ?? 0).toLocaleString(
+                'fr-FR'
+              )}{' '}
+              Ar
+            </td>
 
-                      <td className="font-semibold text-right text-green-600">
-                        {(
-                          live.totalCollected ??
-                          0
-                        ).toLocaleString(
-                          'fr-FR'
-                        )}{' '}
-                        Ar
-                      </td>
+            <td className="font-semibold text-right text-green-600">
+              {(
+                live.totalCollected ?? 0
+              ).toLocaleString('fr-FR')}{' '}
+              Ar
+            </td>
 
-                      <td>
-                        <div className="flex flex-wrap gap-1 justify-center">
-                          <Link
-                            className="btn btn-sm btn-success"
-                            href={`/session/${live.id}`}
-                            title="Ouvrir Session"
-                          >
-                            <CirclePlay className="w-3 h-3" />
-                          </Link>
-
-                          <button
-                            className="btn btn-sm"
-                            onClick={() =>
-                              openEditModal(
-                                live
-                              )
-                            }
-                            title="Modifier"
-                          >
-                            <Pencil className="w-3 h-3" />
-                          </button>
-
-                          <button
-                            className="btn btn-sm btn-error"
-                            onClick={() =>
-                              handleDeleteLive(
-                                live.id
-                              )
-                            }
-                            title="Supprimer"
-                          >
-                            <Trash className="w-3 h-3" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-
-              <tfoot>
-                <tr className="font-bold bg-base-200">
-                  <td colSpan={3}>
-                    Totaux généraux
-                  </td>
-
-                  <td className="text-center text-blue-600">
-                    {lives.reduce(
-                      (sum, live) =>
-                        sum +
-                        (live.clientsWithOrders ??
-                          0),
-                      0
-                    )}
-                  </td>
-
-                  <td className="text-center text-green-600">
-                    {lives.reduce(
-                      (sum, live) =>
-                        sum +
-                        (live.clientsDelivered ??
-                          0),
-                      0
-                    )}
-                  </td>
-
-                  <td className="text-center text-blue-600">
-                    {lives.reduce(
-                      (sum, live) =>
-                        sum +
-                        (live.totalArticles ??
-                          0),
-                      0
-                    )}
-                  </td>
-
-                  <td className="text-right text-purple-600">
-                    {lives
-                      .reduce(
-                        (sum, live) =>
-                          sum +
-                          (live.totalAmount ??
-                            0),
-                        0
-                      )
-                      .toLocaleString(
-                        'fr-FR'
-                      )}{' '}
-                    Ar
-                  </td>
-
-                  <td className="text-right text-green-600">
-                    {lives
-                      .reduce(
-                        (sum, live) =>
-                          sum +
-                          (live.totalCollected ??
-                            0),
-                        0
-                      )
-                      .toLocaleString(
-                        'fr-FR'
-                      )}{' '}
-                    Ar
-                  </td>
-
-                  <td></td>
-                </tr>
-              </tfoot>
-            </table>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex flex-wrap justify-center gap-2 mt-6">
-                <button
-                  className="btn btn-sm"
-                  onClick={() =>
-                    goToPage(currentPage - 1)
-                  }
-                  disabled={currentPage === 1}
+            <td>
+              <div className="flex flex-wrap gap-1 justify-center">
+                <Link
+                  className="btn btn-sm btn-success"
+                  href={`/session/${live.id}`}
+                  title="Ouvrir Session"
                 >
-                  Précédent
-                </button>
-
-                {Array.from(
-                  { length: totalPages },
-                  (_, i) => i + 1
-                ).map((page) => (
-                  <button
-                    key={page}
-                    className={`btn btn-sm ${
-                      currentPage === page
-                        ? 'btn-primary'
-                        : ''
-                    }`}
-                    onClick={() =>
-                      goToPage(page)
-                    }
-                  >
-                    {page}
-                  </button>
-                ))}
+                  <CirclePlay className="w-3 h-3" />
+                </Link>
 
                 <button
                   className="btn btn-sm"
                   onClick={() =>
-                    goToPage(currentPage + 1)
+                    openEditModal(live)
                   }
-                  disabled={
-                    currentPage === totalPages
-                  }
+                  title="Modifier"
                 >
-                  Suivant
+                  <Pencil className="w-3 h-3" />
+                </button>
+
+                <button
+                  className="btn btn-sm btn-error"
+                  onClick={() =>
+                    handleDeleteLive(live.id)
+                  }
+                  title="Supprimer"
+                >
+                  <Trash className="w-3 h-3" />
                 </button>
               </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+
+      <tfoot>
+        <tr className="font-bold bg-base-200">
+          <td colSpan={3}>
+            Totaux généraux
+          </td>
+
+          <td className="text-center text-blue-600">
+            {lives.reduce(
+              (sum, live) =>
+                sum +
+                (live.clientsWithOrders ?? 0),
+              0
             )}
-          </>
-        )}
+          </td>
+
+          <td className="text-center text-green-600">
+            {lives.reduce(
+              (sum, live) =>
+                sum +
+                (live.clientsDelivered ?? 0),
+              0
+            )}
+          </td>
+
+          <td className="text-center text-blue-600">
+            {lives.reduce(
+              (sum, live) =>
+                sum +
+                (live.totalArticles ?? 0),
+              0
+            )}
+          </td>
+
+          <td className="text-right text-purple-600">
+            {lives
+              .reduce(
+                (sum, live) =>
+                  sum +
+                  (live.totalAmount ?? 0),
+                0
+              )
+              .toLocaleString('fr-FR')}{' '}
+            Ar
+          </td>
+
+          <td className="text-right text-green-600">
+            {lives
+              .reduce(
+                (sum, live) =>
+                  sum +
+                  (live.totalCollected ?? 0),
+                0
+              )
+              .toLocaleString('fr-FR')}{' '}
+            Ar
+          </td>
+
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    {totalPages > 1 && (
+      <div className="flex flex-wrap justify-center gap-2 mt-6">
+        <button
+          className="btn btn-sm"
+          onClick={() =>
+            goToPage(currentPage - 1)
+          }
+          disabled={currentPage === 1}
+        >
+          Précédent
+        </button>
+
+        {Array.from(
+          { length: totalPages },
+          (_, i) => i + 1
+        ).map((page) => (
+          <button
+            key={page}
+            className={`btn btn-sm ${
+              currentPage === page
+                ? 'btn-primary'
+                : ''
+            }`}
+            onClick={() => goToPage(page)}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          className="btn btn-sm"
+          onClick={() =>
+            goToPage(currentPage + 1)
+          }
+          disabled={
+            currentPage === totalPages
+          }
+        >
+          Suivant
+        </button>
+      </div>
+    )}
+  </>
+)}
       </div>
 
       <LiveModal
