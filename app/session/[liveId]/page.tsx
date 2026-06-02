@@ -739,7 +739,7 @@ const handleTogglePaymentMode = async (
                     <td className="w-64">
                       {clientOrders.map((order, idx) => (
                         <div key={idx} className="text-sm">
-                          Réf {order.ref} - {order.price} Ar
+                          {order.ref} : {order.price} Ar
                         </div>
                       ))}
                       {clientOrders.length === 0 && (
