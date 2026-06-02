@@ -638,13 +638,13 @@ const handleTogglePaymentMode = async (
         </div>
 
      {clientsLoading ? (
-  <div className="flex flex-col items-center justify-center py-20">
-    <span className="loading loading-spinner loading-lg text-primary"></span>
-    <p className="mt-3 text-gray-500">Chargement des clients...</p>
-  </div>
-) : clients.length === 0 ? (
-  <EmptyState message="Pas encore de Client" IconComponent="User" />
-) : (
+              <div className="flex flex-col items-center justify-center py-20">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+                <p className="mt-3 text-gray-500">Chargement des clients...</p>
+              </div>
+            ) : clients.length === 0 ? (
+              <EmptyState message="Pas encore de Client" IconComponent="User" />
+            ) : (
  <table className="table w-full">
               <thead>
               <tr>
@@ -653,7 +653,7 @@ const handleTogglePaymentMode = async (
                 </th>
               </tr>
                 <tr>
-  <th colSpan={10} className="py-4 bg-base-200">
+   <th colSpan={10} className="py-4 bg-base-200">
     <div className="w-full flex justify-center">
       <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-base text-center max-w-6xl">
         
@@ -698,7 +698,7 @@ const handleTogglePaymentMode = async (
                 <th className="text-lg">Nom</th>
                 <th className="text-lg">Adresse</th>
                 <th className="text-lg">Contact</th>
-                <th className="text-lg">Articles</th>
+                <th className="text-lg min-w-[150px]">Articles</th>
                 <th className="text-lg">Total</th>
                 <th className="text-lg">Actions</th>
                 <th className="text-lg">Remarque</th>

@@ -411,7 +411,7 @@ const Page = () => {
             Commandes Livrés
           </th>
 
-          <th className="text-center min-w-[90px]">
+          <th className="text-center min-w-[100px]">
               Articles
           </th>
 
