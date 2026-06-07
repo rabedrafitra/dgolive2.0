@@ -645,8 +645,7 @@ const handleTogglePaymentMode = async (
             ) : clients.length === 0 ? (
               <EmptyState message="Pas encore de Client" IconComponent="User" />
             ) : (
- <table className="table w-full">
-              <thead>
+<table className="table table-sm w-full [&_td]:py-1 [&_th]:py-2">              <thead>
               <tr>
                 <th colSpan={9} className="text-3xl font-bold text-center py-4 text-primary">
                   {live ? `${live.name} — ${formattedDate}` : 'Détails du Live'}
@@ -694,16 +693,16 @@ const handleTogglePaymentMode = async (
   </th>
 </tr>
               <tr>
-                <th className="text-center"></th>
-                <th className="text-lg">Nom</th>
-                <th className="text-lg">Adresse</th>
-                <th className="text-lg">Contact</th>
-                <th className="text-lg min-w-[150px]">Articles</th>
-                <th className="text-lg">Total</th>
-                <th className="text-lg">Actions</th>
-                <th className="text-lg">Remarque</th>
-                <th className="text-lg">Payé</th>
-                <th className="text-lg">MVola</th>
+            <th className="text-center"></th>
+            <th className="text-lg">Nom</th>
+            <th className="text-lg">Adresse</th>
+            <th className="text-lg w-10">Contact</th>
+            <th className="text-lg w-10">Articles</th>
+             <th className="text-lg w-10">Total</th>
+            <th className="text-lg w-40">Actions</th>
+            <th className="text-lg w-24">Remarque</th>
+            <th className="text-lg w-20">Payé</th>
+            <th className="text-lg w-20">MVola</th>
               </tr>
             </thead>
           
@@ -746,10 +745,10 @@ const handleTogglePaymentMode = async (
                         <div className="text-sm text-gray-500">Aucun article</div>
                       )}
                     </td>
-                    <td className="font-semibold text-center">
+                    <td className="w-64">
                       {clientTotal} Ar
                     </td>
-                    <td className="align-middle">
+                    <td className="w-64">
                       <div className="flex gap-2 justify-center">
                         <button
                           className="btn btn-sm btn-success"
