@@ -718,7 +718,7 @@ const handleTogglePaymentMode = async (
                     <th>{index + 1}</th>
                     <td>
                           <div className="flex flex-col">
-                            <span>{client.name}</span>
+                            <span className="text-sm">{client.name}</span>
 
                             <span
                               className={`badge badge-sm ${
@@ -734,7 +734,7 @@ const handleTogglePaymentMode = async (
                           </div>
                         </td>
                     <td>{client.address}</td>
-                    <td>{client.tel}</td>
+                    <td className="text-sm">{client.tel}</td>
                     <td className="w-64">
                       {clientOrders.map((order, idx) => (
                         <div key={idx} className="text-sm">
@@ -745,8 +745,8 @@ const handleTogglePaymentMode = async (
                         <div className="text-sm text-gray-500">Aucun article</div>
                       )}
                     </td>
-                    <td className="w-64">
-                      {clientTotal} Ar
+                    <td className="text-sm">
+                      {clientTotal}Ar
                     </td>
                     <td className="w-64">
                       <div className="flex gap-2 justify-center">
