@@ -19,7 +19,7 @@ export default function Home() {
               Boostez vos ventes en direct avec un tableau de bord optimisé
             </h1>
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-              DGoLive réunit gestion des clients, commandes et sessions live dans une interface claire, responsive et pensée pour la conversion.
+              DGoLive réunit gestion des clients, commandes et sessions Live dans une interface claire, responsive et pensée pour la conversion.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
